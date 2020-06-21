@@ -9,6 +9,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import CycleDynamicView from '@/components/CycleDynamicView'
 
 export default {
@@ -28,49 +29,64 @@ export default {
     setInterval(() => {
       this.width -= 10
     }, 500)
-  },
-  computed: {
-    dynamicData: function () {
-      return {
-        direction: 'horizontal', // horizontal vertical
+    this.$store.commit('updateDynamicData', {
+      direction: 'horizontal', // horizontal vertical
+      children: [{
+        direction: 'vertical',
+        left: '0',
+        top: '0',
+        width: this.width,
+        height: '96',
+        children: []
+      }, {
+        direction: 'vertical',
+        left: '0',
+        top: '100',
+        width: this.width,
+        height: '96',
+        children: []
+      }, {
+        direction: 'vertical',
+        left: '0',
+        top: '200',
+        width: this.width,
+        height: '96',
+        children: []
+      }, {
+        direction: 'vertical',
+        left: '0',
+        top: '300',
+        width: this.width,
+        height: this.height - 68,
         children: [{
           direction: 'vertical',
           left: '0',
           top: '0',
-          width: this.width,
-          height: '64',
+          width: '200',
+          height: this.height - 64,
           children: []
         }, {
           direction: 'vertical',
-          left: '0',
-          top: '68',
-          width: this.width,
-          height: this.height - 68,
-          children: [{
-            direction: 'vertical',
-            left: '0',
-            top: '0',
-            width: '200',
-            height: this.height - 64,
-            children: []
-          }, {
-            direction: 'vertical',
-            left: '200',
-            top: '0',
-            width: this.width - 400,
-            height: this.height - 64,
-            children: []
-          }, {
-            direction: 'vertical',
-            left: this.width - 200,
-            top: '0',
-            width: '200',
-            height: this.height - 64,
-            children: []
-          }]
+          left: '204',
+          top: '0',
+          width: this.width - 400,
+          height: this.height - 64,
+          children: []
+        }, {
+          direction: 'vertical',
+          left: this.width - 200 + 8,
+          top: '0',
+          width: '200',
+          height: this.height - 64,
+          children: []
         }]
-      }
-    }
+      }]
+    })
+  },
+  computed: {
+    ...mapState([
+      'dynamicData'
+    ])
   }
 }
 </script>
