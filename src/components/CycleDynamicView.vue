@@ -50,6 +50,12 @@ const cycle = (createElement, direction, data, context) => {
                 window.moveItemVerticalIndex = index
                 window.moveItemVertical = item
                 window.moveItemVerticalAfter = data[index + 1]
+              },
+              touchstart: (e) => {
+                window.moveType = 'vertical'
+                window.moveItemVerticalIndex = index
+                window.moveItemVertical = item
+                window.moveItemVerticalAfter = data[index + 1]
               }
             }
           }, null))
@@ -66,6 +72,12 @@ const cycle = (createElement, direction, data, context) => {
             },
             on: {
               mousedown: () => {
+                window.moveType = 'horizontal'
+                window.moveItemHorizontalIndex = index
+                window.moveItemHorizontal = item
+                window.moveItemHorizontalAfter = data[index + 1]
+              },
+              touchstart: (e) => {
                 window.moveType = 'horizontal'
                 window.moveItemHorizontalIndex = index
                 window.moveItemHorizontal = item
@@ -106,7 +118,31 @@ export default Vue.component('cycle-dynamic-view', {
               }
             }
           },
+          touchmove: (e) => {
+            if (window.moveType === 'horizontal') {
+              if (window.moveItemHorizontal) {
+                window.moveItemHorizontal.width = e.touches[0].clientX - Number(window.moveItemHorizontal.left)
+                window.moveItemHorizontalAfter.width = Number(window.moveItemHorizontalAfter.left) + Number(window.moveItemHorizontalAfter.width) - e.touches[0].clientX - 4
+                window.moveItemHorizontalAfter.left = Number(window.moveItemHorizontal.width) + Number(window.moveItemHorizontal.left) + 4
+                context.parent.$store.commit('updateDynamicData', context.props.data)
+              }
+            } else if (window.moveType === 'vertical') {
+              if (window.moveItemVertical) {
+                window.moveItemVertical.height = e.touches[0].clientY - Number(window.moveItemVertical.top)
+                window.moveItemVerticalAfter.height = Number(window.moveItemVerticalAfter.top) + Number(window.moveItemVerticalAfter.height) - e.touches[0].clientY - 4
+                window.moveItemVerticalAfter.top = Number(window.moveItemVertical.height) + Number(window.moveItemVertical.top) + 4
+                context.parent.$store.commit('updateDynamicData', context.props.data)
+              }
+            }
+          },
           mouseup: () => {
+            window.moveItemVertical = null
+            window.moveItemHorizontal = null
+            window.moveItemHorizontalIndex = 0
+            window.moveItemVerticalIndex = 0
+            // console.log(e)
+          },
+          touchend: () => {
             window.moveItemVertical = null
             window.moveItemHorizontal = null
             window.moveItemHorizontalIndex = 0

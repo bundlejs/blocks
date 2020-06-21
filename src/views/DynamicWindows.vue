@@ -62,21 +62,21 @@ export default {
           direction: 'vertical',
           left: '0',
           top: '0',
-          width: '200',
+          width: '196',
           height: this.height - 64,
           children: []
         }, {
           direction: 'vertical',
-          left: '204',
+          left: '200',
           top: '0',
           width: this.width - 400,
           height: this.height - 64,
           children: []
         }, {
           direction: 'vertical',
-          left: this.width - 200 + 8,
+          left: this.width - 196,
           top: '0',
-          width: '200',
+          width: '196',
           height: this.height - 64,
           children: []
         }]
