@@ -93,19 +93,15 @@ export default Vue.component('cycle-dynamic-view', {
             if (window.moveType === 'horizontal') {
               if (window.moveItemHorizontal) {
                 window.moveItemHorizontal.width = e.clientX - Number(window.moveItemHorizontal.left)
-                window.moveItemHorizontalAfter.width = Number(window.moveItemHorizontalAfter.left) + Number(window.moveItemHorizontalAfter.width) - e.clientX - 4 * (window.moveItemHorizontalIndex + 1)
-                window.moveItemHorizontalAfter.left = e.clientX + 4 * (window.moveItemHorizontalIndex + 1)
-                // console.log(context.moveItem.clientY, e.clientY, context.moveItem.top)
-                // console.log(context)
+                window.moveItemHorizontalAfter.width = Number(window.moveItemHorizontalAfter.left) + Number(window.moveItemHorizontalAfter.width) - e.clientX - 4
+                window.moveItemHorizontalAfter.left = Number(window.moveItemHorizontal.width) + Number(window.moveItemHorizontal.left) + 4
                 context.parent.$store.commit('updateDynamicData', context.props.data)
               }
             } else if (window.moveType === 'vertical') {
               if (window.moveItemVertical) {
                 window.moveItemVertical.height = e.clientY - Number(window.moveItemVertical.top)
-                window.moveItemVerticalAfter.height = Number(window.moveItemVerticalAfter.top) + Number(window.moveItemVerticalAfter.height) - e.clientY - 4 * (window.moveItemVerticalIndex + 1)
-                window.moveItemVerticalAfter.top = e.clientY + 4 * (window.moveItemVerticalIndex + 1)
-                // console.log(context.moveItem.clientY, e.clientY, context.moveItem.top)
-                // console.log(context)
+                window.moveItemVerticalAfter.height = Number(window.moveItemVerticalAfter.top) + Number(window.moveItemVerticalAfter.height) - e.clientY - 4
+                window.moveItemVerticalAfter.top = Number(window.moveItemVertical.height) + Number(window.moveItemVertical.top) + 4
                 context.parent.$store.commit('updateDynamicData', context.props.data)
               }
             }
